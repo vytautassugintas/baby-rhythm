@@ -1,79 +1,108 @@
-import { useState, useRef } from 'react'
-import { useOutsideClick } from '../useOutsideClick'
+import * as React from 'react'
+
+import Backdrop from '@mui/material/Backdrop'
+import Menu from '@mui/material/Menu'
+import MenuList from '@mui/material/MenuList'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+
+import SpeedDialIcon from '@mui/material/SpeedDialIcon'
+import CribTwoToneIcon from '@mui/icons-material/CribTwoTone'
+import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone'
+import ArrowCircleRightTwoToneIcon from '@mui/icons-material/ArrowCircleRightTwoTone'
+import EmojiFoodBeverageTwoToneIcon from '@mui/icons-material/EmojiFoodBeverageTwoTone'
+import ChildCareTwoToneIcon from '@mui/icons-material/ChildCareTwoTone'
+import BabyChangingStationTwoToneIcon from '@mui/icons-material/BabyChangingStationTwoTone'
+import SwipeLeftAltTwoToneIcon from '@mui/icons-material/SwipeLeftAltTwoTone'
+import SwipeRightAltTwoToneIcon from '@mui/icons-material/SwipeRightAltTwoTone'
 
 import { useDispatch } from 'react-redux'
-import { add } from '../eventsSlice'
+import { add } from '../store/eventsSlice'
 
-import './Fab.css'
+const actions = [
+    {
+        icon: <SwipeLeftAltTwoToneIcon />,
+        name: 'Pump Left',
+        payload: { type: 'PUMP_LEFT', title: 'Pump Left' },
+    },
+    {
+        icon: <SwipeRightAltTwoToneIcon />,
+        name: 'Pump Right',
+        payload: { type: 'PUMP_RIGHT', title: 'Pump Right' },
+    },
+    {
+        icon: <ArrowCircleLeftTwoToneIcon />,
+        name: 'Feed Left',
+        payload: { type: 'LEFT', title: 'Feed Left' },
+    },
+    {
+        icon: <ArrowCircleRightTwoToneIcon />,
+        name: 'Feed Right',
+        payload: { type: 'RIGHT', title: 'Feed Right' },
+    },
+    {
+        icon: <EmojiFoodBeverageTwoToneIcon />,
+        name: 'Bottle',
+        payload: { type: 'BOTTLE', title: 'Bottle' },
+    },
+    { icon: <ChildCareTwoToneIcon />, name: 'Burp', payload: { type: 'BURP', title: 'Burp' } },
+    {
+        icon: <BabyChangingStationTwoToneIcon />,
+        name: 'Change',
+        payload: { type: 'CHANGE', title: 'Change' },
+    },
+    { icon: <CribTwoToneIcon />, name: 'Sleep', payload: { type: 'SLEEP', title: 'Sleep' } },
+]
 
-export const Fab = () => {
+import Fab from '@mui/material/Fab'
+
+export default function SpeedDialTooltipOpen() {
     const dispatch = useDispatch()
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const ref = useRef(null)
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-    useOutsideClick(ref, () => {
-        setIsMenuOpen(false)
-    })
+    const open = Boolean(anchorEl)
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget)
+    }
+
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
+
+    const handleActionClick = (payload: (typeof actions)['0']['payload']) => {
+        dispatch(add(payload))
+        setAnchorEl(null)
+    }
 
     return (
-        <div ref={ref}>
-            {isMenuOpen && (
-                <div className={`fabMenu`}>
-                    <div
-                        className="fabMenuButton"
-                        onClick={() => {
-                            dispatch(add({ type: 'LEFT', title: 'Left Breast' }))
-                            setIsMenuOpen((value) => !value)
-                        }}
-                    >
-                        Left Breast
-                    </div>
-                    <div
-                        className="fabMenuButton"
-                        onClick={() => {
-                            dispatch(add({ type: 'RIGHT', title: 'Right Breast' }))
-                            setIsMenuOpen((value) => !value)
-                        }}
-                    >
-                        Right Breast
-                    </div>
-                    <div
-                        className="fabMenuButton"
-                        onClick={() => {
-                            dispatch(add({ type: 'BOTTLE', title: 'Bottle' }))
-                            setIsMenuOpen((value) => !value)
-                        }}
-                    >
-                        Bottle
-                    </div>
-                    <div
-                        className="fabMenuButton"
-                        onClick={() => {
-                            dispatch(add({ type: 'BURP', title: 'Burp' }))
-                            setIsMenuOpen((value) => !value)
-                        }}
-                    >
-                        Burp
-                    </div>
-                    <div
-                        className="fabMenuButton"
-                        onClick={() => {
-                            dispatch(add({ type: 'CHANGE', title: 'Change' }))
-                            setIsMenuOpen((value) => !value)
-                        }}
-                    >
-                        Change
-                    </div>
-                </div>
-            )}
-            <button
-                onClick={() => {
-                    setIsMenuOpen((value) => !value)
-                }}
-                className={`fab ${isMenuOpen ? 'fabFocus' : ''}`}
+        <div>
+            <Fab onClick={handleClick} sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+                <SpeedDialIcon />
+            </Fab>
+            <Backdrop open={open} />
+            <Menu
+                sx={{ minWidth: '300px' }}
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
             >
-                +
-            </button>
+                <MenuList sx={{ minWidth: '200px' }}>
+                    {actions.map((action) => (
+                        <MenuItem
+                            key={action.name}
+                            onClick={() => {
+                                handleActionClick(action.payload)
+                            }}
+                        >
+                            <ListItemIcon>{action.icon}</ListItemIcon>
+                            <ListItemText>{action.name}</ListItemText>
+                        </MenuItem>
+                    ))}
+                </MenuList>
+            </Menu>
         </div>
     )
 }
