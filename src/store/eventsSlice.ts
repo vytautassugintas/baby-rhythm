@@ -32,12 +32,18 @@ export const eventsSlice = createSlice({
     },
     reducers: {
         add: (state, action) => {
-            state.value.push({
-                start: moment().toDate(),
-                end: moment().add(15, 'minutes').toDate(),
-                type: action?.payload?.type,
-                title: action?.payload?.title,
-            })
+            const lastElement = state.value[state.value.length - 1]
+            if (lastElement.type === action.payload.type && !lastElement.end) {
+                lastElement.end = moment().toDate()
+            } else {
+                state.value.push({
+                    start: moment().toDate(),
+                    // end: moment().add(15, 'minutes').toDate(),
+                    end: null,
+                    type: action?.payload?.type,
+                    title: action?.payload?.title,
+                })
+            }
         },
         remove: (state, action) => {
             state.value = state.value.filter((e) => {

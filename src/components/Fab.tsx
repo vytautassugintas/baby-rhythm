@@ -78,7 +78,11 @@ export default function SpeedDialTooltipOpen() {
 
     return (
         <div>
-            <Fab onClick={handleClick} sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+            <Fab
+                color={'primary'}
+                onClick={handleClick}
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+            >
                 <SpeedDialIcon />
             </Fab>
             <Backdrop open={open} />

@@ -6,5 +6,8 @@ export default defineConfig({
         title: 'Baby Rhythm',
         tags: [{ tag: 'link', head: true, attrs: { rel: 'manifest', href: 'manifest.json' } }],
     },
+    server: {
+        base: '/baby-rhythm',
+    },
     plugins: [pluginReact()],
 })

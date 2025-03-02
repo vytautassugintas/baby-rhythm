@@ -55,12 +55,12 @@ export default function CustomizedTimeline({ events }) {
                 return (
                     <TimelineItem key={moment(event.start).toISOString()}>
                         <TimelineOppositeContent
-                            sx={{ m: 'auto 0' }}
-                            align="right"
-                            variant="body2"
+                            sx={{ m: 'auto 0', textAlign: 'left' }}
+                            variant="body1"
                             color="text.primary"
+                            fontWeight={500}
                         >
-                            {moment(event.start).format('HH:mm')}
+                            {event.title}
                         </TimelineOppositeContent>
                         <TimelineSeparator>
                             <TimelineConnector />
@@ -70,11 +70,14 @@ export default function CustomizedTimeline({ events }) {
                         </TimelineSeparator>
                         <TimelineContent
                             sx={{ m: 'auto 0' }}
-                            align="right"
+                            align="left"
                             variant="body2"
                             color="text.primary"
                         >
-                            {event.title}
+                            <Typography>
+                                {moment(event.start).format('HH:mm')}{' '}
+                                {!!event.end && ` - ${moment(event.start).format('HH:mm')}`}
+                            </Typography>
                         </TimelineContent>
                     </TimelineItem>
                 )

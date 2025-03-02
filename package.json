@@ -3,13 +3,14 @@
     "version": "1.0.0",
     "private": true,
     "type": "module",
+    "homepage": "https://vytautassugintas.github.io/baby-rhythm",
     "scripts": {
         "build": "rsbuild build",
         "dev": "rsbuild dev --open",
         "format": "prettier --write .",
         "lint": "eslint .",
         "preview": "rsbuild preview",
-        "deploy": "npm run build && gh-pages -d dist"
+        "deploy": "npm run build && gh-pages --dist dist"
     },
     "dependencies": {
         "@emotion/react": "^11.14.0",
