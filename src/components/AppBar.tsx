@@ -10,9 +10,10 @@ export default function ButtonAppBar() {
     return (
         <AppBar color={'primary'} position="sticky">
             <Dialog
+                title={'This will reset current data'}
+                subtitle={'I recommend doing this only once per day'}
                 isOpen={isSure}
                 onAgreeClick={() => {
-                    console.log('wha?')
                     localStorage.clear()
                     window.location.reload()
                 }}

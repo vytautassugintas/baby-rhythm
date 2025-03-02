@@ -5,7 +5,6 @@ import { RootState } from './store'
 // eslint-disable-next-line
 export const eventsMiddleware: Middleware<{}, RootState> = ({ getState }) => {
     return (next) => (action) => {
-        console.log({ action })
         const result = next(action)
         localStorage.setItem('eventsData', JSON.stringify(getState()))
         return result
@@ -33,12 +32,11 @@ export const eventsSlice = createSlice({
     reducers: {
         add: (state, action) => {
             const lastElement = state.value[state.value.length - 1]
-            if (lastElement.type === action.payload.type && !lastElement.end) {
+            if (lastElement?.type === action?.payload?.type && !lastElement.end) {
                 lastElement.end = moment().toDate()
             } else {
                 state.value.push({
                     start: moment().toDate(),
-                    // end: moment().add(15, 'minutes').toDate(),
                     end: null,
                     type: action?.payload?.type,
                     title: action?.payload?.title,
@@ -55,7 +53,6 @@ export const eventsSlice = createSlice({
                 if (moment(e.start).toISOString() !== moment(action.payload.start).toISOString()) {
                     return e
                 }
-                console.log({ action })
                 return e
             })
         },

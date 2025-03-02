@@ -10,6 +10,8 @@ import TimelineDot from '@mui/lab/TimelineDot'
 
 import Typography from '@mui/material/Typography'
 
+import Dialog from './Dialog'
+
 import moment from 'moment'
 
 import CribTwoToneIcon from '@mui/icons-material/CribTwoTone'
@@ -24,7 +26,7 @@ import SwipeRightAltTwoToneIcon from '@mui/icons-material/SwipeRightAltTwoTone'
 import { blue, pink, teal, grey } from '@mui/material/colors'
 
 import { useDispatch } from 'react-redux'
-import { add } from '../store/eventsSlice'
+import { remove } from '../store/eventsSlice'
 
 const typeToIcon = {
     ['LEFT']: <ArrowCircleLeftTwoToneIcon />,
@@ -49,92 +51,56 @@ const typeToColor = {
 }
 
 export default function CustomizedTimeline({ events }) {
-    return (
-        <Timeline position="right">
-            {events.map((event) => {
-                return (
-                    <TimelineItem key={moment(event.start).toISOString()}>
-                        <TimelineOppositeContent
-                            sx={{ m: 'auto 0', textAlign: 'left' }}
-                            variant="body1"
-                            color="text.primary"
-                            fontWeight={500}
-                        >
-                            {event.title}
-                        </TimelineOppositeContent>
-                        <TimelineSeparator>
-                            <TimelineConnector />
-                            <TimelineDot sx={{ backgroundColor: typeToColor[event.type] }}>
-                                {typeToIcon[event.type]}
-                            </TimelineDot>
-                        </TimelineSeparator>
-                        <TimelineContent
-                            sx={{ m: 'auto 0' }}
-                            align="left"
-                            variant="body2"
-                            color="text.primary"
-                        >
-                            <Typography>
-                                {moment(event.start).format('HH:mm')}{' '}
-                                {!!event.end && ` - ${moment(event.start).format('HH:mm')}`}
-                            </Typography>
-                        </TimelineContent>
-                    </TimelineItem>
-                )
-            })}
+    const dispatch = useDispatch()
+    const [selectedEvent, setSelectedEvent] = React.useState<null | string>(null)
 
-            {/* <TimelineItem>
-                <TimelineOppositeContent
-                    sx={{ m: 'auto 0' }}
-                    variant="body2"
-                    color="text.secondary"
-                >
-                    10:00 am
-                </TimelineOppositeContent>
-                <TimelineSeparator>
-                    <TimelineConnector />
-                    <TimelineDot color="primary">
-                        <LaptopMacIcon />
-                    </TimelineDot>
-                    <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Code
-                    </Typography>
-                    <Typography>Because it&apos;s awesome!</Typography>
-                </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-                <TimelineSeparator>
-                    <TimelineConnector />
-                    <TimelineDot color="primary" variant="outlined">
-                        <HotelIcon />
-                    </TimelineDot>
-                    <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-                </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Sleep
-                    </Typography>
-                    <Typography>Because you need rest</Typography>
-                </TimelineContent>
-            </TimelineItem>
-            <TimelineItem>
-                <TimelineSeparator>
-                    <TimelineConnector sx={{ bgcolor: 'secondary.main' }} />
-                    <TimelineDot color="secondary">
-                        <RepeatIcon />
-                    </TimelineDot>
-                    <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent sx={{ py: '12px', px: 2 }}>
-                    <Typography variant="h6" component="span">
-                        Repeat
-                    </Typography>
-                    <Typography>Because this is the life you love!</Typography>
-                </TimelineContent>
-            </TimelineItem> */}
-        </Timeline>
+    return (
+        <React.Fragment>
+            <Dialog
+                title={'Would you like to remove this event?'}
+                subtitle={''}
+                isOpen={!!selectedEvent}
+                onAgreeClick={() => dispatch(remove({ start: selectedEvent }))}
+                onDisagreeClick={() => setSelectedEvent(null)}
+            />
+            <Timeline position="right">
+                {events.map((event) => {
+                    return (
+                        <TimelineItem
+                            onClick={() => {
+                                setSelectedEvent(event.start)
+                            }}
+                            key={moment(event.start).toISOString()}
+                        >
+                            <TimelineOppositeContent
+                                sx={{ m: 'auto 0', textAlign: 'left' }}
+                                variant="body1"
+                                color="text.primary"
+                                fontWeight={500}
+                            >
+                                {event.title}
+                            </TimelineOppositeContent>
+                            <TimelineSeparator>
+                                <TimelineConnector />
+                                <TimelineDot sx={{ backgroundColor: typeToColor[event.type] }}>
+                                    {typeToIcon[event.type]}
+                                </TimelineDot>
+                            </TimelineSeparator>
+                            <TimelineContent
+                                sx={{ m: 'auto 0' }}
+                                align="left"
+                                variant="body2"
+                                color="text.primary"
+                            >
+                                <Typography>
+                                    {moment(event.start).format('HH:mm')}{' '}
+                                    {!!event.end && ` - ${moment(event.start).format('HH:mm')}`}
+                                </Typography>
+                            </TimelineContent>
+                        </TimelineItem>
+                    )
+                })}
+            </Timeline>
+        </React.Fragment>
     )
 }

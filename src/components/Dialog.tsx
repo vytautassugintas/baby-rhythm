@@ -17,11 +17,18 @@ const Transition = React.forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />
 })
 
-export default function AlertDialogSlide({ onAgreeClick, isOpen }) {
+export default function AlertDialogSlide({
+    onAgreeClick,
+    onDisagreeClick,
+    isOpen,
+    title,
+    subtitle,
+}) {
     const [open, setOpen] = React.useState(isOpen)
 
     const handleClose = () => {
         setOpen(false)
+        onDisagreeClick()
     }
 
     React.useEffect(() => {
@@ -37,10 +44,10 @@ export default function AlertDialogSlide({ onAgreeClick, isOpen }) {
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>This will reset current data</DialogTitle>
+                <DialogTitle>{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
-                        I recommend doing this only once per day
+                        {subtitle}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
