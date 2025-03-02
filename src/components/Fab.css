@@ -1,0 +1,45 @@
+.fab {
+    position: absolute;
+    background-color: #f44336;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background: #f44336;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 36px;
+    box-shadow:
+        0 3px 6px rgba(0, 0, 0, 0.16),
+        0 3px 6px rgba(0, 0, 0, 0.23);
+    transition: 0.3s;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    bottom: 16px;
+    right: 16px;
+    z-index: 9999;
+}
+
+.fabFocus {
+    transform: scale(1.1);
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.fabMenu {
+    background-color: red;
+    position: absolute;
+    bottom: 86px;
+    right: 16px;
+    z-index: 9999;
+}
+
+.fabMenuButton {
+    padding: 8px;
+    border-bottom: 1px solid grey;
+}
+
+.fabMenuButton:last-child {
+    padding: 8px;
+    border-bottom: 0;
+}

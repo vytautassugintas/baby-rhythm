@@ -1,15 +1,20 @@
-import './App.css';
+import './App.css'
+import { Calendar } from './components/Calendar'
+import { Fab } from './components/Fab'
 
-import { Timeline } from './components/Timeline/Timeline';
-import { Calendar } from './components/Calendar';
+import { Provider } from 'react-redux'
+import store from './store'
 
 const App = () => {
-  return (
-    <div className="content">
-      <Calendar />
-      <Timeline />
-    </div>
-  );
-};
+    return (
+        <Provider store={store}>
+            <div className="content">
+                <Calendar />
+                {/* <Timeline /> */}
+                <Fab />
+            </div>
+        </Provider>
+    )
+}
 
-export default App;
+export default App

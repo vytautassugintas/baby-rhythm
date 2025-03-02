@@ -1,3 +1,12 @@
 .rbc-active {
-    color: red!important;
-  }
+    background-color: blanchedalmond;
+    color: #000 !important;
+}
+
+.rbc-calendar {
+    color: #222222;
+}
+
+.my-event {
+    background-color: aquamarine !important;
+}
