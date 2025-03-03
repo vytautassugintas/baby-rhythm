@@ -94,7 +94,7 @@ export default function CustomizedTimeline({ events }) {
                             >
                                 <Typography>
                                     {moment(event.start).format('HH:mm')}{' '}
-                                    {!!event.end && ` - ${moment(event.start).format('HH:mm')}`}
+                                    {!!event.end && ` - ${moment(event.end).format('HH:mm')}`}
                                 </Typography>
                             </TimelineContent>
                         </TimelineItem>
