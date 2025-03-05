@@ -10,49 +10,62 @@ import TimelineDot from '@mui/lab/TimelineDot'
 
 import Typography from '@mui/material/Typography'
 
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+
 import Dialog from './Dialog'
 
 import moment from 'moment'
 
-import CribTwoToneIcon from '@mui/icons-material/CribTwoTone'
-import ArrowCircleLeftTwoToneIcon from '@mui/icons-material/ArrowCircleLeftTwoTone'
-import ArrowCircleRightTwoToneIcon from '@mui/icons-material/ArrowCircleRightTwoTone'
-import EmojiFoodBeverageTwoToneIcon from '@mui/icons-material/EmojiFoodBeverageTwoTone'
-import ChildCareTwoToneIcon from '@mui/icons-material/ChildCareTwoTone'
-import BabyChangingStationTwoToneIcon from '@mui/icons-material/BabyChangingStationTwoTone'
-import SwipeLeftAltTwoToneIcon from '@mui/icons-material/SwipeLeftAltTwoTone'
-import SwipeRightAltTwoToneIcon from '@mui/icons-material/SwipeRightAltTwoTone'
-
-import { blue, pink, teal, grey } from '@mui/material/colors'
-
 import { useDispatch } from 'react-redux'
 import { remove } from '../store/eventsSlice'
 
-const typeToIcon = {
-    ['LEFT']: <ArrowCircleLeftTwoToneIcon />,
-    ['RIGHT']: <ArrowCircleRightTwoToneIcon />,
-    ['BOTTLE']: <EmojiFoodBeverageTwoToneIcon />,
-    ['BURP']: <ChildCareTwoToneIcon />,
-    ['CHANGE']: <BabyChangingStationTwoToneIcon />,
-    ['SLEEP']: <CribTwoToneIcon />,
-    ['PUMP_LEFT']: <SwipeLeftAltTwoToneIcon />,
-    ['PUMP_RIGHT']: <SwipeRightAltTwoToneIcon />,
-}
-
-const typeToColor = {
-    ['LEFT']: pink[200],
-    ['RIGHT']: pink[200],
-    ['BOTTLE']: grey[700],
-    ['BURP']: teal[400],
-    ['CHANGE']: teal[800],
-    ['SLEEP']: blue[900],
-    ['PUMP_LEFT']: pink[700],
-    ['PUMP_RIGHT']: pink[700],
-}
+import { typeToIcon, typeToColor } from '../babyActions'
 
 export default function CustomizedTimeline({ events }) {
     const dispatch = useDispatch()
     const [selectedEvent, setSelectedEvent] = React.useState<null | string>(null)
+
+    // return <>
+    //     <Dialog
+    //         title={'Would you like to remove this event?'}
+    //         subtitle={''}
+    //         isOpen={!!selectedEvent}
+    //         onAgreeClick={() => dispatch(remove({ start: selectedEvent }))}
+    //         onDisagreeClick={() => setSelectedEvent(null)}
+    //     />
+    //     <div>
+    //         {events.map((event) =>
+    //             <Box
+    //                 sx={{
+    //                     display: 'flex',
+    //                     flexWrap: 'wrap',
+    //                     '& > :not(style)': {
+    //                         m: 1,
+    //                     },
+    //                     width: '100%'
+    //                 }}
+    //             >
+    //                 <Paper elevation={3}>
+    //                     <div onClick={() => {
+    //                         setSelectedEvent(event.start)
+    //                     }}
+    //                         key={moment(event.start).toISOString()}>
+    //                         <div>{event.title}</div>
+    //                         <div style={{ backgroundColor: typeToColor[event.type] }}>
+    //                             {typeToIcon[event.type]}
+    //                         </div>
+    //                         <div>
+    //                             {moment(event.start).format('HH:mm')}{' '}
+    //                             {!!event.end && ` - ${moment(event.end).format('HH:mm')}`}
+    //                         </div>
+    //                     </div>
+    //                 </Paper>
+    //             </Box>
+    //         )}
+    //     </div>
+    // </>
+
 
     return (
         <React.Fragment>
