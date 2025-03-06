@@ -6,18 +6,20 @@ import ChildCareTwoToneIcon from '@mui/icons-material/ChildCareTwoTone'
 import BabyChangingStationTwoToneIcon from '@mui/icons-material/BabyChangingStationTwoTone'
 // import SwipeLeftAltTwoToneIcon from '@mui/icons-material/SwipeLeftAltTwoTone'
 // import SwipeRightAltTwoToneIcon from '@mui/icons-material/SwipeRightAltTwoTone'
-import GamesIcon from '@mui/icons-material/Games';
+import GamesIcon from '@mui/icons-material/Games'
 
 import { blue, pink, teal, grey, green } from '@mui/material/colors'
 
+const ICON_SIZE = 'large'
+
 export const typeToIcon = {
-    ['LEFT']: <ArrowCircleLeftTwoToneIcon />,
-    ['RIGHT']: <ArrowCircleRightTwoToneIcon />,
-    ['BOTTLE']: <EmojiFoodBeverageTwoToneIcon />,
-    ['BURP']: <ChildCareTwoToneIcon />,
-    ['CHANGE']: <BabyChangingStationTwoToneIcon />,
-    ['SLEEP']: <CribTwoToneIcon />,
-    ['TUMMY_TIME']: <GamesIcon />
+    ['LEFT']: <ArrowCircleLeftTwoToneIcon fontSize={ICON_SIZE} />,
+    ['RIGHT']: <ArrowCircleRightTwoToneIcon fontSize={ICON_SIZE} />,
+    ['BOTTLE']: <EmojiFoodBeverageTwoToneIcon fontSize={ICON_SIZE} />,
+    ['BURP']: <ChildCareTwoToneIcon fontSize={ICON_SIZE} />,
+    ['CHANGE']: <BabyChangingStationTwoToneIcon fontSize={ICON_SIZE} />,
+    ['SLEEP']: <CribTwoToneIcon fontSize={ICON_SIZE} />,
+    ['TUMMY_TIME']: <GamesIcon fontSize={ICON_SIZE} />,
     // ['PUMP_LEFT']: <SwipeLeftAltTwoToneIcon />,
     // ['PUMP_RIGHT']: <SwipeRightAltTwoToneIcon />,
 }
@@ -33,7 +35,6 @@ export const typeToColor = {
     // ['PUMP_LEFT']: pink[700],
     // ['PUMP_RIGHT']: pink[700],
 }
-
 
 export const actions = [
     // {
@@ -68,5 +69,9 @@ export const actions = [
         payload: { type: 'BOTTLE', title: 'Bottle' },
     },
     { icon: <CribTwoToneIcon />, name: 'Sleep', payload: { type: 'SLEEP', title: 'Sleep' } },
-    { icon: <GamesIcon />, name: 'Tummy Time', payload: { type: 'TUMMY_TIME', title: 'Tummy Time' } },
+    {
+        icon: <GamesIcon />,
+        name: 'Tummy Time',
+        payload: { type: 'TUMMY_TIME', title: 'Tummy Time' },
+    },
 ]

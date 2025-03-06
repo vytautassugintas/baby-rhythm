@@ -33,6 +33,10 @@ export default function SpeedDialTooltipOpen() {
     const handleActionClick = (payload: (typeof actions)['0']['payload']) => {
         dispatch(add(payload))
         setAnchorEl(null)
+
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight)
+        }, 50)
     }
 
     return (
@@ -40,18 +44,12 @@ export default function SpeedDialTooltipOpen() {
             <Fab
                 color={'primary'}
                 onClick={handleClick}
-                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                sx={{ position: 'fixed', bottom: 28, right: 16 }}
             >
                 <SpeedDialIcon />
             </Fab>
             <Backdrop open={open} />
-            <Menu
-                sx={{ minWidth: '300px' }}
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-            >
+            <Menu id="basic-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
                 <MenuList sx={{ minWidth: '200px' }}>
                     {actions.map((action) => (
                         <MenuItem

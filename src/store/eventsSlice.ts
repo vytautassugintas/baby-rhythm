@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { createSlice, Middleware } from '@reduxjs/toolkit'
+import { createSlice, current, Middleware } from '@reduxjs/toolkit'
 import { RootState } from './store'
 
 // eslint-disable-next-line
@@ -28,11 +28,13 @@ export const eventsSlice = createSlice({
                 title: 'Sleep',
             },
         ],
+        currentEvent: null,
     },
     reducers: {
         add: (state, action) => {
             const lastElement = state.value[state.value.length - 1]
             if (lastElement?.type === action?.payload?.type && !lastElement.end) {
+                state.currentEvent = null
                 lastElement.end = moment().toDate()
             } else {
                 state.value.push({
@@ -41,6 +43,7 @@ export const eventsSlice = createSlice({
                     type: action?.payload?.type,
                     title: action?.payload?.title,
                 })
+                state.currentEvent = state.value[state.value.length - 1]
             }
         },
         remove: (state, action) => {
